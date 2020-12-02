@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="mysql" targetRuntime="MyBatis3">
+<!--        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />-->
+        <!-- 自定义的注释规则，继承 DefaultCommentGenerator 重写 一些方法 -->
+        <!--<commentGenerator type="generator.NewbatisGenerator">
+            &lt;!&ndash; 是否去除自动生成日期的注释 true：是 ： false:否 &ndash;&gt;
+            <property name="suppressDate" value="true"/>
+            &lt;!&ndash; 是否去除所有自动生成的注释 true：是 ： false:否 &ndash;&gt;
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/traum"
+                        userId="root"
+                        password="621248">
+        </jdbcConnection>
+        <!--生成entity类存放位置-->
+        <javaModelGenerator targetPackage="com.dtr.sp.bean" targetProject="/Users/liudong/IdeaProjects/spring-boot-project/mybatis-plus-project/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--生成映射文件存放位置-->
+        <sqlMapGenerator targetPackage="/mapper" targetProject="/Users/liudong/IdeaProjects/spring-boot-project/mybatis-plus-project/src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--生成Dao类存放位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dtr.sp.dao"
+                             targetProject="/Users/liudong/IdeaProjects/spring-boot-project/mybatis-plus-project/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <table tableName="tc_user" domainObjectName="TcUser"
+               enableInsert="true"
+               enableDeleteByPrimaryKey="true"
+               enableSelectByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+    </context>
+</generatorConfiguration>
