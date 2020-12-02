@@ -1,4 +1,4 @@
-package com.dtr.dto;
+package com.dtr.web.dto;
 
 import java.util.LinkedHashMap;
 

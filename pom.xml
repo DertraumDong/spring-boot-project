@@ -12,6 +12,7 @@
         <module>dubbo</module>
         <module>excel-poi-project</module>
         <module>internal-common-project</module>
+        <module>mybatis-plus-project</module>
     </modules>
 
 
