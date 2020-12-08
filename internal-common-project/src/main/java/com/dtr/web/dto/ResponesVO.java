@@ -39,4 +39,13 @@ public class ResponesVO extends LinkedHashMap<String,Object> {
     public void addData(String key,Object data){
         this.put(key,data);
     }
+
+    public ResponesVO() {
+        this.code = "10001";
+        this.put("code",this.code);
+        this.msg="请求成功";
+        this.put("msg",this.msg);
+        this.put("data",this.data);
+    }
+
 }
