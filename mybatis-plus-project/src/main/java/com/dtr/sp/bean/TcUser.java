@@ -1,5 +1,8 @@
 package com.dtr.sp.bean;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.KeySequence;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.dtr.base.dto.BaseQueryVO;
 
 public class TcUser {
@@ -10,6 +13,7 @@ public class TcUser {
      *
      * @mbg.generated Tue Dec 01 21:46:20 CST 2020
      */
+    @TableId(value = "id",type = IdType.ASSIGN_ID)
     private String id;
 
     /**
