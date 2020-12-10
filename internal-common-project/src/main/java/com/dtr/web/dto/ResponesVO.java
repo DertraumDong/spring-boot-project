@@ -8,28 +8,13 @@ import java.util.LinkedHashMap;
  * @author Dertraum
  */
 public class ResponesVO extends LinkedHashMap<String,Object> {
-    private String code;
-    private String msg;
-    private Object data;
-
-    public String getCode() {
-        return code;
-    }
 
     public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
+        this.put("code",code);
     }
 
     public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Object getData() {
-        return this.get("data");
+        this.put("msg",msg);
     }
 
     public void setData(Object data) {
@@ -41,11 +26,7 @@ public class ResponesVO extends LinkedHashMap<String,Object> {
     }
 
     public ResponesVO() {
-        this.code = "10001";
-        this.put("code",this.code);
-        this.msg="请求成功";
-        this.put("msg",this.msg);
-        this.put("data",this.data);
+        this.put("code","10001");
+        this.put("msg","请求成功");
     }
-
 }
