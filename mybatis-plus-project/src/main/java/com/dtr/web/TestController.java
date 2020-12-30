@@ -1,18 +1,15 @@
 package com.dtr.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dtr.sp.bean.TcUser;
 import com.dtr.sp.service.TcUserService;
+import com.dtr.util.UUIDUtil;
 import com.dtr.web.dto.ResponesVO;
 import com.dtr.web.dto.TcUserQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/test")
@@ -50,6 +47,13 @@ public class TestController {
         ResponesVO responesVO = new ResponesVO();
         int result = tcUserService.deleteById(tcUser);
         responesVO.setData(result);
+        return responesVO;
+    }
+
+    @GetMapping("/testUUID")
+    public ResponesVO testUUID(){
+        ResponesVO responesVO = new ResponesVO();
+        responesVO.setData(UUIDUtil.getUUID());
         return responesVO;
     }
 }
