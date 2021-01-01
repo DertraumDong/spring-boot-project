@@ -13,6 +13,7 @@
         <module>excel-poi-project</module>
         <module>internal-common-project</module>
         <module>mybatis-plus-project</module>
+        <module>log4j2-project</module>
     </modules>
 
 
