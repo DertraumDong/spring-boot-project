@@ -1,0 +1,18 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /spring-boot-project/redis-project
+
+spring:
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout: 30000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait:
+        max-idle: 0
+        min-idle: 8
