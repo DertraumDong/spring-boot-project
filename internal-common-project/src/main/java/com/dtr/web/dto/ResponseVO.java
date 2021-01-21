@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
  * @since 2020-11-07
  * @author Dertraum
  */
-public class ResponesVO extends LinkedHashMap<String,Object> {
+public class ResponseVO extends LinkedHashMap<String,Object> {
 
     public void setCode(String code) {
         this.put("code",code);
@@ -25,7 +25,7 @@ public class ResponesVO extends LinkedHashMap<String,Object> {
         this.put(key,data);
     }
 
-    public ResponesVO() {
+    public ResponseVO() {
         this.put("code","10001");
         this.put("msg","请求成功");
     }
