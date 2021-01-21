@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "67cca15d-5ca6-484d-9c8f-3c719e7a25c2",
+		"name": "自己测试",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "setValue",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "value",
+							"value": "popololo",
+							"type": "text"
+						},
+						{
+							"key": "key",
+							"value": "popo",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{redisProjectUrl}}/redis/setValue",
+					"host": [
+						"{{redisProjectUrl}}"
+					],
+					"path": [
+						"redis",
+						"setValue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getValue",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "key",
+							"value": "popo",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{redisProjectUrl}}/redis/getValue",
+					"host": [
+						"{{redisProjectUrl}}"
+					],
+					"path": [
+						"redis",
+						"getValue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setHash",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "key",
+							"value": "heihei",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "[][][][[dsadasdas",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{redisProjectUrl}}/redis/setHash",
+					"host": [
+						"{{redisProjectUrl}}"
+					],
+					"path": [
+						"redis",
+						"setHash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getHash",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "key",
+							"value": "heihei",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{redisProjectUrl}}/redis/getHash",
+					"host": [
+						"{{redisProjectUrl}}"
+					],
+					"path": [
+						"redis",
+						"getHash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllKey",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{redisProjectUrl}}/redis/getAllKey",
+					"host": [
+						"{{redisProjectUrl}}"
+					],
+					"path": [
+						"redis",
+						"getAllKey"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
