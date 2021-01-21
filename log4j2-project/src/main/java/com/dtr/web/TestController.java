@@ -1,6 +1,6 @@
 package com.dtr.web;
 
-import com.dtr.web.dto.ResponesVO;
+import com.dtr.web.dto.ResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,9 +24,9 @@ public class TestController {
     }
 
     @PostMapping("/test")
-    public ResponesVO getTest(){
-        ResponesVO responesVO = new ResponesVO();
+    public ResponseVO getTest(){
+        ResponseVO responseVO = new ResponseVO();
         LOGGER.info("test");
-        return responesVO;
+        return responseVO;
     }
 }

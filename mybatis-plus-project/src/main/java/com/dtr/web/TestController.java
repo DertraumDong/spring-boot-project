@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dtr.sp.bean.TcUser;
 import com.dtr.sp.service.TcUserService;
 import com.dtr.util.UUIDUtil;
-import com.dtr.web.dto.ResponesVO;
+import com.dtr.web.dto.ResponseVO;
 import com.dtr.web.dto.TcUserQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,41 +19,41 @@ public class TestController {
     private TcUserService tcUserService;
 
     @PostMapping("/selectPage")
-    public ResponesVO selectPage(@RequestBody TcUserQuery tcUserQuery){
-        ResponesVO responesVO = new ResponesVO();
+    public ResponseVO selectPage(@RequestBody TcUserQuery tcUserQuery){
+        ResponseVO responseVO = new ResponseVO();
         IPage<TcUser> page = tcUserService.selectPage(tcUserQuery);
-        responesVO.setData(page);
-        return responesVO;
+        responseVO.setData(page);
+        return responseVO;
     }
 
     @PostMapping("/insert")
-    public ResponesVO insert(@RequestBody TcUser tcUser){
-        ResponesVO responesVO = new ResponesVO();
+    public ResponseVO insert(@RequestBody TcUser tcUser){
+        ResponseVO responseVO = new ResponseVO();
         int result = tcUserService.insert(tcUser);
-        responesVO.setData(result);
-        return responesVO;
+        responseVO.setData(result);
+        return responseVO;
     }
 
     @PostMapping("/update")
-    public ResponesVO update(@RequestBody TcUser tcUser){
-        ResponesVO responesVO = new ResponesVO();
+    public ResponseVO update(@RequestBody TcUser tcUser){
+        ResponseVO responseVO = new ResponseVO();
         int result = tcUserService.update(tcUser);
-        responesVO.setData(result);
-        return responesVO;
+        responseVO.setData(result);
+        return responseVO;
     }
 
     @PostMapping("/delete")
-    public ResponesVO deleteById(@RequestBody TcUser tcUser){
-        ResponesVO responesVO = new ResponesVO();
+    public ResponseVO deleteById(@RequestBody TcUser tcUser){
+        ResponseVO responseVO = new ResponseVO();
         int result = tcUserService.deleteById(tcUser);
-        responesVO.setData(result);
-        return responesVO;
+        responseVO.setData(result);
+        return responseVO;
     }
 
     @GetMapping("/testUUID")
-    public ResponesVO testUUID(){
-        ResponesVO responesVO = new ResponesVO();
-        responesVO.setData(UUIDUtil.getUUID());
-        return responesVO;
+    public ResponseVO testUUID(){
+        ResponseVO responseVO = new ResponseVO();
+        responseVO.setData(UUIDUtil.getUUID());
+        return responseVO;
     }
 }
