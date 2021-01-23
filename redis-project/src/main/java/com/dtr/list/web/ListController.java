@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * 利用redis的特性做排行榜
  * @Author DerTraum
@@ -43,6 +48,29 @@ public class ListController {
         return responseVO;
     }
 
+    @PostMapping("/addVote")
+    public ResponseVO addVote(@RequestParam("articleId") String articleId){
+        ResponseVO responseVO = new ResponseVO();
+        int index = (int) (Math.random()*10);
+        String userId = RedisConstant.ids[index];
+        Set<String> userIds = (Set<String>) redisTemplate.opsForHash().get(RedisConstant.VOTE_KEY,articleId);
+        if(userIds==null ){
+            userIds = new HashSet<>();
+        }
+        if(userIds.add(userId)){
+            redisTemplate.opsForHash().put(RedisConstant.VOTE_KEY,articleId,userIds);
+        }else{
+            responseVO.setCode("10005");
+            responseVO.setMsg("您已投过票。");
+        }
+        return responseVO;
+    }
+    @PostMapping("/getVoteArticleId")
+    public ResponseVO getVoteUserId(@RequestParam("articleId") String articleId){
+        ResponseVO responseVO = new ResponseVO();
+        responseVO.setData(redisTemplate.opsForHash().get(RedisConstant.VOTE_KEY,articleId));
+        return responseVO;
+    }
 
 
 }
