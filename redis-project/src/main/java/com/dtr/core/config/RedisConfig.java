@@ -1,4 +1,4 @@
-package com.dtr.config;
+package com.dtr.core.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

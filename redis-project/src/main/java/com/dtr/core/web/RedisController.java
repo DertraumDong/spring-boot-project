@@ -1,5 +1,6 @@
-package com.dtr.web;
+package com.dtr.core.web;
 
+import com.dtr.core.common.RedisConstant;
 import com.dtr.web.dto.ResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,34 +23,32 @@ public class RedisController {
     /* 日志记录器 */
     private final static Logger LOGGER = LoggerFactory.getLogger(RedisController .class);
 
-    private static final String KEY = "DerTraum_key";
-
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
 
     @PostMapping("/setValue")
     public ResponseVO setValue(@RequestParam("value") String value, @RequestParam("key") String key){
-        redisTemplate.opsForValue().set(KEY+key,value);
+        redisTemplate.opsForValue().set(RedisConstant.KEY+key,value);
         return new ResponseVO();
     }
 
     @PostMapping("/getValue")
     public ResponseVO getValue(@RequestParam("key") String key){
         ResponseVO responseVO = new ResponseVO();
-        responseVO.setData(redisTemplate.opsForValue().get(KEY+key));
+        responseVO.setData(redisTemplate.opsForValue().get(RedisConstant.KEY+key));
         return responseVO;
     }
 
     @PostMapping("/setHash")
     public ResponseVO setHash(@RequestParam("value") String value, @RequestParam("key") String key){
-        redisTemplate.opsForHash().put(KEY+key,"test",value);
+        redisTemplate.opsForHash().put(RedisConstant.KEY+key,"test",value);
         return new ResponseVO();
     }
 
     @PostMapping("/getHash")
     public ResponseVO getHash(@RequestParam("key") String key){
         ResponseVO responseVO = new ResponseVO();
-        responseVO.setData(redisTemplate.opsForHash().get(KEY+key,"test"));
+        responseVO.setData(redisTemplate.opsForHash().get(RedisConstant.KEY+key,"test"));
         return responseVO;
     }
 
@@ -57,6 +56,13 @@ public class RedisController {
     public ResponseVO getAllKey(){
         ResponseVO responseVO = new ResponseVO();
         responseVO.setData(redisTemplate.keys("*"));
+        return responseVO;
+    }
+
+    @PostMapping("/delKey")
+    public ResponseVO delKey(@RequestParam("key") String key){
+        ResponseVO responseVO = new ResponseVO();
+        responseVO.setData(redisTemplate.delete(RedisConstant.KEY+key));
         return responseVO;
     }
 }
