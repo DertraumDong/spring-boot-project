@@ -34,7 +34,7 @@ public class SnowFlake {
     private static SnowFlake singleobject = new SnowFlake(21,06);
 
     // 单例模式
-    public SnowFlake getSingleobject(){
+    public static SnowFlake getSingleobject(){
         return singleobject;
     }
 
