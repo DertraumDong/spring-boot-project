@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,7 +50,7 @@ public class ZFBExcelUtil {
         downloadExcel(zhichuVoList,shouruVoList);
     }
 
-    private static List<ZFBExcelVo> buildList(File file) throws IOException, InvalidFormatException {
+    private static List<ZFBExcelVo> buildList(File file) throws IOException, InvalidFormatException, ParseException {
         // 创建工作薄对象
         Workbook workbook;
         workbook = WorkbookFactory.create(file);
@@ -64,15 +65,18 @@ public class ZFBExcelUtil {
         for (int i = first;i<=count;i++){
             Row row = sheet.getRow(i);
             // 交易日期
-            String date = row.getCell(4).getStringCellValue().replaceAll("\t","");
+            String dateStr = row.getCell(4).getStringCellValue().replaceAll("\t","");
             String time = row.getCell(5).getStringCellValue().replaceAll("\t","");
-            /*DateFormat df = new SimpleDateFormat("yyyyMMdd");
+            DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
             Date date1 = df.parse(dateStr);
             DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
-            String date = df2.format(date1);*/
+            String date = df2.format(date1);
             // 交易时间
             //String time = row.getCell(1).getStringCellValue().replaceAll("\t","");
             String beizhu = row.getCell(9).getStringCellValue().replaceAll("\t","");
+            if(beizhu.substring(0,3).equals("余额宝")){
+                continue;
+            }
             double money = row.getCell(10).getNumericCellValue();
             ZFBExcelVo excelVo = new ZFBExcelVo(date,time,beizhu);
             excelVo.setMoney(money);
