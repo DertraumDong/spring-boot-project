@@ -3,6 +3,7 @@ package com.dtr.bean;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
@@ -15,9 +16,10 @@ import java.util.Date;
 public class CatEmailLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "不能为空")
     //@Column(name = "email_context", nullable = true, length = 100)
     private String emailContext;
 
