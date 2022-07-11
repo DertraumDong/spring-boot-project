@@ -1,9 +1,7 @@
 package com.dtr.sp.bean;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.dtr.base.dto.BaseQueryVO;
 
 public class TcUser {
     /**

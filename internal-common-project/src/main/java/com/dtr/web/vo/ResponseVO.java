@@ -1,4 +1,4 @@
-package com.dtr.web.dto;
+package com.dtr.web.vo;
 
 import com.dtr.base.dto.BaseExceptionState;
 

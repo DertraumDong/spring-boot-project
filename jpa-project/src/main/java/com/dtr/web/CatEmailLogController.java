@@ -1,17 +1,12 @@
 package com.dtr.web;
 
-import com.dtr.base.dto.BaseExceptionState;
-import com.dtr.bean.CatEmailLog;
 import com.dtr.bean.dto.CatEmailLogDto;
 import com.dtr.service.CatEmailLogService;
-import com.dtr.web.dto.ResponseVO;
+import com.dtr.web.vo.ResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.Date;
 
 /**
  * Created on 2021/4/11.

@@ -1,6 +1,6 @@
 package com.dtr.web;
 
-import com.dtr.web.dto.ResponseVO;
+import com.dtr.web.vo.ResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;

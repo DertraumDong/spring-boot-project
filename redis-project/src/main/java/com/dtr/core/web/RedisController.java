@@ -1,7 +1,7 @@
 package com.dtr.core.web;
 
 import com.dtr.core.common.RedisConstant;
-import com.dtr.web.dto.ResponseVO;
+import com.dtr.web.vo.ResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

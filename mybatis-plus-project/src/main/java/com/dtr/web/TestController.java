@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.dtr.sp.bean.TcUser;
 import com.dtr.sp.service.TcUserService;
 import com.dtr.util.UUIDUtil;
-import com.dtr.web.dto.ResponseVO;
+import com.dtr.web.vo.ResponseVO;
 import com.dtr.web.dto.TcUserQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

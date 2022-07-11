@@ -2,3 +2,6 @@
 /.idea/*.xml
 /.idea/libraries
 /*/target
+*.gitignore
+*/mvnw
+*/mvnw.cmd

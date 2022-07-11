@@ -1,12 +1,7 @@
 package com.dtr.bean.dto;
 
-import com.dtr.base.dto.BaseQueryVO;
+import com.dtr.base.dto.BaseQueryDTO;
 import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.Date;
 
 /**
  * Created on 2021/4/11.
@@ -14,7 +9,7 @@ import java.util.Date;
  * @author LiuDong
  */
 @Data
-public class CatEmailLogDto extends BaseQueryVO {
+public class CatEmailLogDto extends BaseQueryDTO {
     private Integer id;
     private String emailContext;
 }
