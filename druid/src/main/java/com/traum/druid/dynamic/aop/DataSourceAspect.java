@@ -1,5 +1,6 @@
 package com.traum.druid.dynamic.aop;
 
+import com.traum.druid.dynamic.aop.user.UserThreadLocal;
 import com.traum.druid.dynamic.holder.DataSourceContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.After;
@@ -29,8 +30,10 @@ public class DataSourceAspect {
 
     @Before("pointCut() && @annotation(dataSource)")
     public void doBefore(DataSource dataSource){
-        log.info("选择数据源---"+dataSource.value());
-        DataSourceContextHolder.setDataSource(dataSource.value());
+        String tendId = UserThreadLocal.getUserInfo().getTendId();
+        String dataName = DataSourceEnum.getDataNameByTendId(tendId);
+        log.info("选择数据源---"+dataName);
+        DataSourceContextHolder.setDataSource(dataName);
     }
 
     @After("pointCut()")
