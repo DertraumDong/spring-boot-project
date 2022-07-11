@@ -1,7 +1,8 @@
 *.iml
 /.idea/*.xml
 /.idea/libraries
-/*/target
+*/target
 *.gitignore
 */mvnw
 */mvnw.cmd
+*/.mvn
