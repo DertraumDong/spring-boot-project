@@ -1,5 +1,7 @@
 package com.dtr.web.dto;
 
+import com.dtr.base.dto.BaseExceptionState;
+
 import java.util.LinkedHashMap;
 
 /**
@@ -28,5 +30,17 @@ public class ResponseVO extends LinkedHashMap<String,Object> {
     public ResponseVO() {
         this.put("code","10001");
         this.put("msg","请求成功");
+    }
+
+    public static ResponseVO error(){
+        ResponseVO responseVO = new ResponseVO();
+        responseVO.setCode(BaseExceptionState.COMMON_ERROR.getCode());
+        responseVO.setMsg(BaseExceptionState.COMMON_ERROR.getMsg());
+        return responseVO;
+    }
+
+    public static ResponseVO success(){
+        ResponseVO responseVO = new ResponseVO();
+        return responseVO;
     }
 }
