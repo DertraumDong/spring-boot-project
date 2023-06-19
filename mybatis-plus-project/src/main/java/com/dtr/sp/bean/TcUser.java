@@ -2,6 +2,7 @@ package com.dtr.sp.bean;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModelProperty;
 
 public class TcUser {
     /**
@@ -11,6 +12,7 @@ public class TcUser {
      *
      * @mbg.generated Tue Dec 01 21:46:20 CST 2020
      */
+    @ApiModelProperty(value = "ID")
     @TableId(value = "id",type = IdType.ASSIGN_ID)
     private String id;
 
@@ -21,6 +23,7 @@ public class TcUser {
      *
      * @mbg.generated Tue Dec 01 21:46:20 CST 2020
      */
+    @ApiModelProperty(value = "用户名")
     private String username;
 
     /**
