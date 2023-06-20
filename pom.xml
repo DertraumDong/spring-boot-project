@@ -18,6 +18,7 @@
         <module>jpa-project</module>
         <module>druid</module>
         <module>job-project</module>
+        <module>nacos</module>
     </modules>
 
 
