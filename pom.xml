@@ -19,6 +19,8 @@
         <module>druid</module>
         <module>job-project</module>
         <module>nacos</module>
+        <module>nacos-dubbo-project</module>
+        <module>nacos-dubbo-b-project</module>
     </modules>
 
 
