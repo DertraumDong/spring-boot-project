@@ -16,6 +16,7 @@
         <module>log4j2-project</module>
         <module>redis-project</module>
         <module>jpa-project</module>
+        <module>sqlite-project</module>
         <module>druid</module>
         <module>job-project</module>
         <module>nacos</module>
