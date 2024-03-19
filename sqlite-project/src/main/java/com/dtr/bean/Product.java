@@ -84,4 +84,12 @@ public class Product implements Serializable {
     @Version
     @TableField(fill = FieldFill.INSERT_UPDATE, update="%s+1")
     private String version;
+
+    public Integer getAsepticPackagingValue(){
+        return this.asepticPackaging?1:0;
+    }
+
+    public Integer getBeforeSterilizeValue(){
+        return this.beforeSterilize?1:0;
+    }
 }

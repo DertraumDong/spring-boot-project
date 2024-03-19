@@ -2,6 +2,7 @@ package com.dtr.web;
 
 
 import com.dtr.bean.Product;
+import com.dtr.config.handler.ProductDataSave;
 import com.dtr.service.impl.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,8 @@ public class ProductWeb {
     private ProductService productService;
 
     @GetMapping("/tranProduct")
-    public void one(){
-
-
+    public void tran(){
+        ProductDataSave.mainMethod();
     }
 
     @GetMapping("/find")
