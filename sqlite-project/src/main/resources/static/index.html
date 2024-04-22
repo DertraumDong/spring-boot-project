@@ -1,0 +1,73 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开始面试</title>
+    <style>
+        /* 样式可以根据实际需求进行调整 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .btn-start {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-start:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>欢迎开始面试</h1>
+    <button class="btn-start" onclick="startInterview()">开始面试</button>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    <a href="result.html">面试结果查询</a>
+    </br>
+    <a href="question.html">题目维护</a>
+</div>
+
+<script>
+    function startInterview() {
+        // 发起开始面试的请求
+        fetch('/api/interview/start', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('开始面试失败');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 可以根据需要进行页面跳转等操作
+                //console.log('开始面试成功');
+                // 跳转到面试题目页面
+                window.location.href = '/interview.html?startId='+data.id; // 替换成实际的页面路径
+            })
+
+            .catch(error => {
+                console.error('开始面试失败:', error);
+            });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面试题管理</title>
+    <style>
+        /* 简单的样式，你可以根据自己的需求进行调整 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>面试题管理</h1>
+    <button class="btn" onclick="goIndex()">回到主页</button>
+    <button class="btn" onclick="getQuestions()">获取所有题目</button>
+    <button class="btn" onclick="openModal('add')">添加题目</button>
+    <table id="questionTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>题目内容</th>
+            <th>正确答案</th>
+            <th>解析</th>
+            <th>难度</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="questionBody">
+        </tbody>
+    </table>
+</div>
+
+<!-- 添加/编辑题目的模态框 -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle">添加题目</h2>
+        <form id="questionForm" onsubmit="return false;">
+            <label for="questionText">题目内容：</label>
+            <input type="text" id="questionText" name="questionText" required><br>
+            <label for="correctAnswer">正确答案：</label>
+            <input type="text" id="correctAnswer" name="correctAnswer" required><br>
+            <label for="explanation">解析：</label>
+            <input type="text" id="explanation" name="explanation"><br>
+            <label for="difficulty">难度：</label>
+            <input type="number" id="difficulty" name="difficulty" max="5" min="1" value="1" required><br>
+            <button type="submit" class="btn" id="saveBtn">保存</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    getQuestions();
+    // 调用后端接口获取所有题目并展示在页面上
+    function goIndex(){
+        window.location.href = '/'; // 替换成实际的页面路径
+    }
+    function getQuestions() {
+        fetch('/api/questions')
+            .then(response => response.json())
+            .then(data => {
+                const questionBody = document.getElementById('questionBody');
+                questionBody.innerHTML = '';
+                data.forEach(question => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${question.id}</td>
+                        <td>${question.questionText}</td>
+                        <td>${question.correctAnswer}</td>
+                        <td>${question.explanation}</td>
+                        <td>${question.difficulty}</td>
+                        <td>
+                            <button class="btn" onclick="openModal('edit', ${question.id})">编辑</button>
+                            <button class="btn" onclick="deleteQuestion(${question.id})">删除</button>
+                        </td>
+                    `;
+                    questionBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // 打开模态框（添加或编辑题目）
+    function openModal(action, id) {
+        const modal = document.getElementById('myModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const questionForm = document.getElementById('questionForm');
+        const saveBtn = document.getElementById('saveBtn');
+        modal.style.display = 'block';
+        if (action === 'edit') {
+            modalTitle.innerText = '编辑题目';
+            fetch(`/api/questions/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    questionForm.questionText.value = data.questionText;
+                    questionForm.correctAnswer.value = data.correctAnswer;
+                    questionForm.explanation.value = data.explanation;
+                    questionForm.difficulty.value = data.difficulty;
+                    saveBtn.onclick = () => saveQuestion('edit', id);
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            modalTitle.innerText = '添加题目';
+            questionForm.reset();
+            saveBtn.onclick = () => saveQuestion('add');
+        }
+    }
+
+    // 关闭模态框
+    function closeModal() {
+        document.getElementById('myModal').style.display = 'none';
+    }
+
+    // 保存题目（添加或编辑）
+    function saveQuestion(action, id) {
+        const questionForm = document.getElementById('questionForm');
+        const formData = new FormData(questionForm);
+        const jsonData = {};
+        formData.forEach((value, key) => jsonData[key] = value);
+        const method = action === 'add' ? 'POST' : 'PUT';
+        const url = action === 'add' ? '/api/questions' : `/api/questions/${id}`;
+        fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(jsonData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                closeModal();
+                getQuestions();
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // 删除题目
+    function deleteQuestion(id) {
+        if (confirm('确定要删除该题目吗？')) {
+            fetch(`/api/questions/${id}`, { method: 'DELETE' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    getQuestions();
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+</script>
+</body>
+</html>

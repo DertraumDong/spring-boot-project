@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面试记录详情</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .record-details {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: left;
+            width: 80%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .answer {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>面试记录详情</h1>
+    <div id="record-details"></div>
+</div>
+
+<script>
+    // 页面加载完成后初始化页面
+    window.onload = function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var interviewId = urlParams.get('id');
+        if (interviewId) {
+            fetch('/api/interview/record/' + interviewId)
+                .then(response => response.json())
+                .then(data => {
+                    displayRecordDetails(data);
+                })
+                .catch(error => {
+                    console.error('获取面试记录详情失败:', error);
+                });
+        }
+    };
+
+    // 显示面试记录详情
+    function displayRecordDetails(record) {
+        var container = document.getElementById('record-details');
+
+        var recordDiv = document.createElement('div');
+        recordDiv.classList.add('record-details');
+
+        var title = document.createElement('h2');
+        title.innerText = record.interviewRecord.userName + ' 的面试记录 - ' + record.interviewRecord.startTime;
+        recordDiv.appendChild(title);
+
+        var evaluation = document.createElement('p');
+        evaluation.innerHTML = '<strong>面试评价：</strong>' + record.interviewRecord.evaluation;
+        recordDiv.appendChild(evaluation);
+
+        var summary = document.createElement('p');
+        summary.innerHTML = '<strong>面试总结：</strong>' + record.interviewRecord.summary;
+        recordDiv.appendChild(summary);
+
+        var questionsDiv = document.createElement('div');
+        questionsDiv.classList.add('questions');
+        record.list.forEach(answer => {
+            var questionDiv = document.createElement('div');
+            questionDiv.classList.add('question');
+            questionDiv.innerHTML = '<h3>题目：</h3><p class="question">' + answer.interviewQuestion.questionText + '</p>' +
+                '<h5>回答：</h5><p class="answer">' + answer.userAnswer + '</p>';
+            questionsDiv.appendChild(questionDiv);
+        });
+        recordDiv.appendChild(questionsDiv);
+
+        container.appendChild(recordDiv);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面试题目</title>
+    <style>
+        /* 样式可以根据实际需求进行调整 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .question-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .question-content {
+            margin-bottom: 10px;
+        }
+        .answer-input {
+            width: 60%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .btn-group {
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        /* 弹窗内容样式 */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        /* 关闭按钮样式 */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="question">
+        <input type="hidden" id="question-index"/>
+        <div class="question-title" id="question-title">题目</div>
+        <input type="hidden" id="question-id"/>
+        <textarea class="answer-input" id="answer-input" placeholder="请输入你的回答" onchange="answerChange()"></textarea>
+    </div>
+    <div class="btn-group">
+        <button class="btn" onclick="prevQuestion()">上一题</button>
+        <button class="btn" onclick="nextQuestion()">下一题</button>
+        <button class="btn" onclick="submitAnswer()">提交答案</button>
+    </div>
+
+    <!-- 弹窗容器 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>提交成功，请选择要前往的页面：</p>
+            <!-- 按钮列表 -->
+            <button onclick="goToPage('/')">主页</button>
+            <button onclick="goToPage('/result.html')">查询结果</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let questions = []; // 初始化题目数组
+    let currentQuestionIndex = 0;
+    let interviewRecordId = null;
+
+    // 获取弹窗元素
+    var modal = document.getElementById("myModal");
+
+    // 获取关闭按钮元素
+    var span = document.getElementsByClassName("close")[0];
+
+    // 当用户点击关闭按钮时，隐藏弹窗
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // 当用户点击页面其他地方时，隐藏弹窗
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // 初始化页面
+    function initPage() {
+        fetch('/api/interview/questions')
+            .then(response => response.json())
+            .then(data => {
+                for (let i = 0; i < data.length; i++) {
+                    let q = {};
+                    q.title = data[i].questionText;
+                    q.id = data[i].id;
+                    q.answer = "";
+                    questions[i] = q;
+                }
+                displayQuestion();
+            })
+            .catch(error => {
+                console.error('获取题目失败:', error);
+            });
+    }
+
+    // 显示当前题目
+    function displayQuestion() {
+        let currentQuestion = questions[currentQuestionIndex];
+        document.getElementById('question-index').value = currentQuestionIndex;
+        let prefix =  "第" + (currentQuestionIndex+1) + "题 - ";
+        document.getElementById('question-title').innerText = (prefix + currentQuestion.title);
+        document.getElementById('question-id').value = currentQuestion.id;
+        document.getElementById('answer-input').value = currentQuestion.answer; // 清空输入框
+    }
+
+    // 上一题
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            displayQuestion();
+        }
+    }
+
+    // 下一题
+    function nextQuestion() {
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+    }
+
+    // 监控回答
+    function answerChange(){
+        let index = document.getElementById('question-index').value;
+        questions[index].answer = document.getElementById('answer-input').value;
+    }
+
+    // 提交答案
+    function submitAnswer() {
+
+        // 使用确认对话框
+        let confirmSubmit = window.confirm('确认提交答案吗？');
+
+        if (confirmSubmit) {
+            postAnswer();
+        } else {
+            // 用户点击了取消按钮，不进行任何操作
+            console.log('取消提交答案');
+        }
+    }
+
+    function postAnswer(){
+        let answerList = [];
+        for (let i = 0; i < questions.length; i++) {
+            let a = {};
+            a.interviewRecordId = interviewRecordId;
+            a.questionId = questions[i].id;
+            a.userAnswer = questions[i].answer;
+            answerList[i] = a;
+        }
+        // 发起 POST 请求并提交答案
+        fetch('/api/interview/answer', {
+            method: 'POST', // 请求方法为 POST
+            headers: {
+                'Content-Type': 'application/json' // 设置请求头为 JSON 格式
+            },
+            body: JSON.stringify({ // 将答案作为 JSON 格式的请求体发送
+                interviewRecordId: interviewRecordId,
+                list: answerList
+            })
+        })
+            .then(response => {
+                // 处理响应
+                if (!response.ok) {
+                    throw new Error('提交答案失败');
+                }
+                console.log('提交答案成功');
+                end();
+
+            })
+            .catch(error => {
+                console.error('提交答案失败:', error);
+            });
+    }
+
+    function end(){
+        // 发起 POST 请求并提交答案
+        fetch('/api/interview/end', {
+            method: 'POST', // 请求方法为 POST
+            headers: {
+                'Content-Type': 'application/json' // 设置请求头为 JSON 格式
+            },
+            body: JSON.stringify({ // 将答案作为 JSON 格式的请求体发送
+                id: interviewRecordId,
+            })
+        })
+            .then(response => {
+                // 处理响应
+                if (!response.ok) {
+                    throw new Error('结束面试');
+                }
+                console.log('结束面试');
+                openModal();
+            })
+            .catch(error => {
+                console.error('结束面试失败:', error);
+            });
+    }
+
+    // 打开弹窗
+    function openModal() {
+        modal.style.display = "block";
+    }
+
+    // 跳转到指定页面
+    function goToPage(page) {
+        window.location.href = page;
+    }
+
+    // 获取记录id
+    function getInterviewRecordId(){
+        // 获取当前页面的 URL
+        let currentUrl = window.location.href;
+
+        currentUrl = currentUrl.split('?')[1];
+        // 创建 URLSearchParams 对象，并将 URL 传入构造函数
+        let urlParams = new URLSearchParams(currentUrl);
+
+        // 使用 get() 方法获取指定参数的值
+        interviewRecordId = urlParams.get('startId');
+        // 打印获取到的 startId 值
+        console.log('interviewRecordId:', interviewRecordId);
+    }
+
+    // 页面加载完成后初始化页面
+    window.onload = function() {
+        initPage();
+        getInterviewRecordId();
+    };
+</script>
+</body>
+</html>

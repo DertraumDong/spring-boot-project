@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面试记录列表</title>
+    <!-- 样式和脚本 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .record {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            text-align: left;
+            width: 80%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .record a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .record a:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>面试记录列表</h1>
+    <div id="records-container"></div>
+</div>
+
+<script>
+    // 页面加载完成后初始化页面
+    window.onload = function() {
+        fetch('/api/interview/record')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(record => {
+                    displayRecord(record);
+                });
+            })
+            .catch(error => {
+                console.error('获取面试记录失败:', error);
+            });
+    };
+
+    // 显示面试记录
+    function displayRecord(record) {
+        var container = document.getElementById('records-container');
+
+        var recordDiv = document.createElement('div');
+        recordDiv.classList.add('record');
+        recordDiv.innerHTML = '<a href="/resultDetail.html?id=' + record.id + '"> 用户的面试记录 - ' + record.startTime + '</a>';
+
+        container.appendChild(recordDiv);
+    }
+</script>
+</body>
+</html>
